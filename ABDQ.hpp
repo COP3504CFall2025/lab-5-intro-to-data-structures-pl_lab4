@@ -101,7 +101,7 @@ public:
         if(size_ >= capacity_){
             T* new_array = new T[capacity_ * SCALE_FACTOR];
             for(std::size_t i = 0; i < size_; ++i){
-                new_array[i] = data_[i];
+                new_array[i] = data_[(front_ + i) % capacity_];
             }
             delete[] data_;
             data_ = new_array;
@@ -116,7 +116,7 @@ public:
         if(size_ >= capacity_){
             T* new_array = new T[capacity_ * 2];
             for(std::size_t i = 0; i < size_; ++i){
-                new_array[i] = data_[i];
+                new_array[i] = data_[(front_ + i) % capacity_];
             }
             delete[] data_;
             data_ = new_array;
