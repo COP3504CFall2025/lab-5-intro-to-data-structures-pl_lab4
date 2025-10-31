@@ -59,8 +59,10 @@ public:
         delete[] data_;
 
         for (std::size_t i = 0; i < other.size_; ++i) {
-            this -> data_[i] = other.data_[i];
+            this -> newData[i] = other.data_[i];
         }
+
+        data_ = newData;
 
         capacity_ = other.capacity_;
         size_ = other.size_;
@@ -120,7 +122,7 @@ public:
             capacity_ *= 2;
         }
         ++size_;
-        data_[size_++] = item;
+        data_[size_] = item;
     }
 
     // Deletion
@@ -142,13 +144,10 @@ public:
         }
         if(size_ != 0){
             T temp = data_[size_ - 1];
-            data_[size_] = 0;
             size_--;
             return temp;
         }
-        else{
-            return 0;
-        }
+        return 0;
     }
 
     // Access
