@@ -50,7 +50,7 @@ public:
     }
 
     ABDQ& operator=(const ABDQ& other){
-        if(this == other){
+        if(this == &other){
             return *this;
         }
 
@@ -66,7 +66,7 @@ public:
         size_ = other.size_;
         front_ = 0;
         back_ = other.back_;
-}
+    }
 
     ABDQ& operator=(ABDQ&& other) noexcept{
         if(this == &other){
@@ -87,7 +87,7 @@ public:
         other.back_ = 0;
         return *this;
     }
-    ~ABDQ() override{
+    ~ABDQ(){
         delete[] data_;
     }
 
@@ -120,6 +120,9 @@ public:
 
     // Deletion
     T popFront() override{
+        if (size_ == 0) {
+            throw std::runtime_error("Empty deque");
+        }
         T temp = data_[0];
         for(size_t i = 0; i < size_ - 1; ++i){
             data_[i] = data_[i + 1];
@@ -129,11 +132,14 @@ public:
     }
 
     T popBack() override{
+        if (size_ == 0) {
+            throw std::runtime_error("Empty deque");
+        }
         if(size_ != 0){
             T temp = data_[size_ - 1];
-            temp[size_] = 0;
+            data_[size_] = 0;
             size_--;
-            return temp[size_];
+            return data_[size_];
         }
         else{
             return 0;
@@ -142,9 +148,15 @@ public:
 
     // Access
     const T& front() const override{
+        if (size_ == 0) {
+            throw std::runtime_error("Empty deque");
+        }
         return data_[0];
     }
     const T& back() const override{
+        if (size_ == 0) {
+            throw std::runtime_error("Empty deque");
+        }
         return data_[size_ - 1];
     }
 
