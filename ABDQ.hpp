@@ -66,6 +66,8 @@ public:
         size_ = other.size_;
         front_ = 0;
         back_ = other.back_;
+
+        return *this;
     }
 
     ABDQ& operator=(ABDQ&& other) noexcept{
@@ -87,6 +89,7 @@ public:
         other.back_ = 0;
         return *this;
     }
+
     ~ABDQ(){
         delete[] data_;
     }
