@@ -106,6 +106,8 @@ public:
             delete[] data_;
             data_ = new_array;
             capacity_ *= 2;
+            front_ = 0;
+            back_ = size_;
         }
         front_ = (front_ + capacity_ - 1) % capacity_;
         data_[front_] = item;
@@ -121,6 +123,8 @@ public:
             delete[] data_;
             data_ = new_array;
             capacity_ *= 2;
+            front_ = 0;
+            back_ = size_;
         }
         data_[back_] = item;
         back_ = (back_ + 1) % capacity_;
