@@ -117,7 +117,7 @@ public:
 	}
 
 	void Clear(){
-		while(removeHead());
+		while(RemoveHead());
 	}
 
 	// Operators
@@ -145,7 +145,7 @@ public:
 		Clear();
 		Node* curr = rhs.head;
         while (curr) {
-            addTail(curr->data);
+            AddTail(curr->data);
             curr = curr->next;
         }
 
@@ -158,7 +158,7 @@ public:
 	LinkedList(const LinkedList<T>& list) : head(nullptr), tail(nullptr), count(0) {
     Node* curr = list.head;
     while (curr) {
-        addTail(curr->data);
+        AddTail(curr->data);
         curr = curr->next;
     }
 }
