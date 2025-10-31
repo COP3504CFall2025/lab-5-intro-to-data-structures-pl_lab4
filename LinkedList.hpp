@@ -21,6 +21,9 @@ private:
 			prev = nullptr;
 			next = nullptr;
 		}
+		getData(){
+			return data;
+		}
     };
 public:
 	// Behaviors
