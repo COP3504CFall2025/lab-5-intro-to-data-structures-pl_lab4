@@ -105,6 +105,7 @@ public:
             data_ = new_array;
             capacity_ *= 2;
         }
+        ++size_;
         data_[0] = item;
     }
 
@@ -118,6 +119,7 @@ public:
             data_ = new_array;
             capacity_ *= 2;
         }
+        ++size_;
         data_[size_++] = item;
     }
 
@@ -131,7 +133,7 @@ public:
             data_[i] = data_[i + 1];
         }
         --size_;
-        return data_[0];
+        return temp;
     }
 
     T popBack() override{
@@ -142,7 +144,7 @@ public:
             T temp = data_[size_ - 1];
             data_[size_] = 0;
             size_--;
-            return data_[size_];
+            return temp;
         }
         else{
             return 0;
