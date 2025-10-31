@@ -59,7 +59,7 @@ public:
         delete[] data_;
 
         for (std::size_t i = 0; i < other.size_; ++i) {
-            this -> newData[i] = other.data_[i];
+            newData[i] = other.data_[i];
         }
 
         data_ = newData;
