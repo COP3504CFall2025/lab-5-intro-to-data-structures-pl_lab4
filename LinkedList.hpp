@@ -21,7 +21,7 @@ private:
 			prev = nullptr;
 			next = nullptr;
 		}
-		getData(){
+		T getData(){
 			return data;
 		}
     };
