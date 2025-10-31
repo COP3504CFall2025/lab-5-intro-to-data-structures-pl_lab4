@@ -37,7 +37,7 @@ public:
     ABDQ(const ABDQ& other): data_(new T[other.capacity_]), capacity_(other.capacity_), size_(other.size_), front_(0), back_(other.back_) 
     {
         for (std::size_t i = 0; i < other.size_; ++i) {
-            data_[i] = other.data_[i];
+            data_[i] = other.data_[(other.front_ + i) % other.capacity_];
         }
     }
 
@@ -59,7 +59,7 @@ public:
         delete[] data_;
 
         for (std::size_t i = 0; i < other.size_; ++i) {
-            newData[i] = other.data_[i];
+            newData[i] = other.data_[(other.front_ + i) % other.capacity_];
         }
 
         data_ = newData;
@@ -67,7 +67,7 @@ public:
         capacity_ = other.capacity_;
         size_ = other.size_;
         front_ = 0;
-        back_ = other.back_;
+        back_ = other.size_;
 
         return *this;
     }
@@ -99,16 +99,17 @@ public:
     // Insertion
     void pushFront(const T& item) override{
         if(size_ >= capacity_){
-            T* new_array = new T[capacity_ * 2];
+            T* new_array = new T[capacity_ * SCALE_FACTOR];
             for(std::size_t i = 0; i < size_; ++i){
-                new_array[i + 1] = data_[i];
+                new_array[i] = data_[i];
             }
             delete[] data_;
             data_ = new_array;
             capacity_ *= 2;
         }
+        front_ = (front_ + capacity_ - 1) % capacity_;
+        data_[front_] = item;
         ++size_;
-        data_[0] = item;
     }
 
     void pushBack(const T& item) override{
@@ -121,8 +122,9 @@ public:
             data_ = new_array;
             capacity_ *= 2;
         }
+        data_[back_] = item;
+        back_ = (back_ + 1) % capacity_;
         ++size_;
-        data_[size_] = item;
     }
 
     // Deletion
@@ -130,10 +132,8 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Empty deque");
         }
-        T temp = data_[0];
-        for(size_t i = 0; i < size_ - 1; ++i){
-            data_[i] = data_[i + 1];
-        }
+        T temp = data_[front_];
+        front_ = (front_ + 1) % capacity_;
         --size_;
         return temp;
     }
@@ -142,12 +142,10 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Empty deque");
         }
-        if(size_ != 0){
-            T temp = data_[size_ - 1];
-            size_--;
-            return temp;
-        }
-        return 0;
+        back_ = (back_ + capacity_ - 1) % capacity_;
+        T temp = data_[back_];
+        --size_;
+        return temp;
     }
 
     // Access
@@ -155,13 +153,13 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Empty deque");
         }
-        return data_[0];
+        return data_[front_];
     }
     const T& back() const override{
         if (size_ == 0) {
             throw std::runtime_error("Empty deque");
         }
-        return data_[size_ - 1];
+        return data_[(back_ + capacity_ - 1) % capacity_];
     }
 
     // Getters
