@@ -12,7 +12,6 @@ template <typename T>
 class LLDQ : public DequeInterface<T> {
 private:
     LinkedList<T> list;
-
 public:
     // Constructor
     LLDQ() = default;
@@ -24,21 +23,21 @@ public:
 
     // Core Insertion Operations
     void pushFront(const T& item) override{
-        list.addHead(item);
+        list.AddHead(item);
     }
     void pushBack(const T& item) override{
-        list.addTail(item);
+        list.AddTail(item);
     }
 
     // Core Removal Operations
     T popFront() override{
-        T temp = list -> head;
-        list.removeHead();
+        T temp = list.getHead();
+        list.RemoveHead();
         return temp;
     }
     T popBack() override{
-        T temp = list -> tail;
-        list.removeTail();
+        T temp = list.getTail();
+        list.RemoveTail();
         return temp;
     }
 
@@ -52,7 +51,7 @@ public:
 
     // Getter
     std::size_t getSize() const noexcept override{
-        return list -> count;
+        return list.getCount();
     }
 
     void PrintForward() const{
