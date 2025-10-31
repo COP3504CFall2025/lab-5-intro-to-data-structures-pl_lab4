@@ -18,27 +18,139 @@ private:
 
 public:
     // Big 5
-    ABDQ();
-    explicit ABDQ(std::size_t capacity);
-    ABDQ(const ABDQ& other);
-    ABDQ(ABDQ&& other) noexcept;
-    ABDQ& operator=(const ABDQ& other);
-    ABDQ& operator=(ABDQ&& other) noexcept;
-    ~ABDQ() override;
+    ABDQ(){
+        capacity_ = 4;
+        size_ = 0;
+        front_ = 0;
+        back_ = 0;
+        data_ = new T[4];
+    }
+
+    explicit ABDQ(std::size_t capacity){
+        capacity_ = capacity;
+        size_ = 0;
+        front_ = 0;
+        back_ = 0;
+        data_ = new T[capacity];
+    }
+
+    ABDQ(const ABDQ& other): data_(new T[other.capacity_]), capacity_(other.capacity_), size_(other.size_), front_(0), back_(other.back_) 
+    {
+        for (std::size_t i = 0; i < other.size_; ++i) {
+            data_[i] = other.data_[i];
+        }
+    }
+
+    ABDQ(ABDQ&& other) noexcept : data_(other.data_), capacity_(other.capacity_), size_(other.size_), front_(other.front_), back_(other.back_){
+        other.data_ = nullptr;
+        other.size_ = 0;
+        other.capacity_ = 0;
+        other.front_ = 0;
+        other.back_ = 0;
+    }
+
+    ABDQ& operator=(const ABDQ& other){
+        if(this == other){
+            return *this;
+        }
+
+        T* newData = new T[other.capacity_];
+
+        delete[] data_;
+
+        for (std::size_t i = 0; i < other.size_; ++i) {
+            this -> data_[i] = other.data_[i];
+        }
+
+        capacity_ = other.capacity_;
+        size_ = other.size_;
+        front_ = 0;
+        back_ = other.back_;
+}
+
+    ABDQ& operator=(ABDQ&& other) noexcept{
+        if(this == &other){
+            return *this;
+        }
+
+        delete[] data_;
+        data_ = other.data_;
+        capacity_ = other.capacity_;
+        size_ = other.size_;
+        front_ = other.front_;
+        back_ = other.back_;
+
+        other.data_ = nullptr;
+        other.size_ = 0;
+        other.capacity_ = 0;
+        other.front_ = 0;
+        other.back_ = 0;
+        return *this;
+    }
+    ~ABDQ() override{
+        delete[] data_;
+    }
 
     // Insertion
-    void pushFront(const T& item) override;
-    void pushBack(const T& item) override;
+    void pushFront(const T& item) override{
+        if(size_ >= capacity_){
+            T* new_array = new T[capacity_ * 2];
+            for(std::size_t i = 0; i < size_; ++i){
+                new_array[i + 1] = data_[i];
+            }
+            delete[] data_;
+            data_ = new_array;
+            capacity_ *= 2;
+        }
+        data_[0] = item;
+    }
+
+    void pushBack(const T& item) override{
+        if(size_ >= capacity_){
+            T* new_array = new T[capacity_ * 2];
+            for(std::size_t i = 0; i < size_; ++i){
+                new_array[i] = data_[i];
+            }
+            delete[] data_;
+            data_ = new_array;
+            capacity_ *= 2;
+        }
+        data_[size_++] = item;
+    }
 
     // Deletion
-    T popFront() override;
-    T popBack() override;
+    T popFront() override{
+        T temp = data_[0];
+        for(size_t i = 0; i < size_ - 1; ++i){
+            data_[i] = data_[i + 1];
+        }
+        --size_;
+        return data_[0];
+    }
+
+    T popBack() override{
+        if(size_ != 0){
+            T temp = data_[size_ - 1];
+            temp[size_] = 0;
+            size_--;
+            return temp[size_];
+        }
+        else{
+            return 0;
+        }
+    }
 
     // Access
-    const T& front() const override;
-    const T& back() const override;
+    const T& front() const override{
+        return data_[0];
+    }
+    const T& back() const override{
+        return data_[size_ - 1];
+    }
 
     // Getters
-    std::size_t getSize() const noexcept override;
+    std::size_t getSize() const noexcept override{
+        return size_;
+    }
 
 };
