@@ -24,14 +24,14 @@ private:
     };
 public:
 	// Behaviors
-	void printForward() const{
+	void PrintForward() const{
 		Node* curr = head;
 		while (curr != nullptr) {
 			cout << curr->data << endl;
 			curr = curr->next;
 		}
 	}
-	void printReverse() const{
+	void PrintReverse() const{
 		Node* curr = tail;
 		while (curr != nullptr) {
 			cout << curr->data << endl;
