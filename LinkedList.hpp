@@ -38,7 +38,7 @@ public:
 			curr = curr->next;
 		}
 	}
-	void PrintReverse() const{
+	void printReverse() const{
 		Node* curr = tail;
 		while (curr != nullptr) {
 			cout << curr->data << endl;
@@ -64,7 +64,7 @@ public:
 	}
 
 	// Insertion
-	void AddHead(const T& data){
+	void addHead(const T& data){
 		Node* node = new Node(data);
 		node -> next = head;
 		if(head != nullptr){
@@ -76,7 +76,7 @@ public:
 		head = node;
     	++count;
 	}
-	void AddTail(const T& data){
+	void addTail(const T& data){
 		Node* node = new Node(data);
 		node -> prev = tail;
 		if(tail != nullptr){
@@ -90,7 +90,7 @@ public:
 	}
 
 	// Removal
-	bool RemoveHead(){
+	bool removeHead(){
 		if(head == nullptr){
 			return false;
 		}
@@ -109,7 +109,7 @@ public:
 		--count;
 		return true;
 	}
-	bool RemoveTail(){
+	bool removeTail(){
 		if(tail == nullptr){
 			return false;
 		}
@@ -129,7 +129,7 @@ public:
 		return true;
 	}
 
-	void Clear(){
+	void clear(){
 		while(RemoveHead());
 	}
 
