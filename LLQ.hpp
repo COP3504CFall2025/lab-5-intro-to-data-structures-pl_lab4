@@ -25,19 +25,19 @@ public:
 
     // Deletion
     T dequeue() override{
-        T temp = list -> head;
+        T temp = list.getHead().getData();
         list.RemoveHead();
         return temp;
     }
 
     // Access
     T peek() const override{
-        return list.GetHead() -> data;
+        return list.getHead().getData();
     }
 
     // Getter
     std::size_t getSize() const noexcept override{
-        return list -> count;
+        return list.getCount();
     }
 
     void PrintForward() const{
