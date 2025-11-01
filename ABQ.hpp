@@ -125,11 +125,8 @@ public:
         }
         --curr_size_;
 
-        if (curr_size_ > 0 && curr_size_ * 2 < capacity_) {
-            size_t new_capacity = capacity_;
-            while(curr_size_ * 2 < capacity_){
-                new_capacity = new_capacity / 2;
-            }
+        if (curr_size_ > 0 && curr_size_ * 4 < capacity_) {
+            size_t new_capacity = capacity_ / 2;
             if (new_capacity < 1)
                 new_capacity = 1;
             T* new_array = new T[new_capacity];
