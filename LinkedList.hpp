@@ -137,7 +137,7 @@ public:
 			return *this;
 		}
 
-		Clear();
+		clear();
         head = other.head;
         tail = other.tail;
         count = other.count;
