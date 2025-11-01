@@ -121,7 +121,12 @@ public:
             throw std::runtime_error("Queue is empty");
         T temp = array_[0];
 
-        if (curr_size_ > 0 && curr_size_ * 4 < capacity_) {
+        for(size_t i = 0; i < curr_size_ - 1; ++i){
+            array_[i] = array_[i + 1];
+        }
+        --curr_size_;
+
+        if (curr_size_ * 2 <= capacity_) {
             size_t new_capacity = capacity_ / 2;
             if (new_capacity < 1)
                 new_capacity = 1;
@@ -132,11 +137,6 @@ public:
             array_ = new_array;
             capacity_ = new_capacity;
         }
-
-        for(size_t i = 0; i < curr_size_ - 1; ++i){
-            array_[i] = array_[i + 1];
-        }
-        --curr_size_;
 
         return temp;
     }
