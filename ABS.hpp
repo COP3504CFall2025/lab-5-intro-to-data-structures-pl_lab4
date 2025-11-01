@@ -120,7 +120,7 @@ public:
         T temp = array_[curr_size_ - 1];
         curr_size_--;
 
-        if (curr_size_ * 4 < capacity_) {
+        if (curr_size_ * 2 < capacity_) {
             size_t new_capacity = capacity_ / 2;
             if (new_capacity < 1){
                 new_capacity = 1;
