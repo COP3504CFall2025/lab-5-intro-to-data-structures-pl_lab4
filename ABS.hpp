@@ -49,9 +49,9 @@ public:
     }
 
     ABS(ABS&& other) noexcept : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(other.array_) {
-        other.array_ = nullptr;
+        other.array_ = new T[1];
         other.curr_size_ = 0;
-        other.capacity_ = 0;
+        other.capacity_ = 1;
     }
 
     ABS& operator=(ABS&& rhs) noexcept{
@@ -65,9 +65,9 @@ public:
         curr_size_ = rhs.curr_size_;
         capacity_ = rhs.capacity_;
 
-        rhs.array_ = nullptr;
+        rhs.array_ = new T[1];
         rhs.curr_size_ = 0;
-        rhs.capacity_ = 0;
+        rhs.capacity_ = 1;
         return *this;
     }
 
@@ -108,18 +108,32 @@ public:
 
     T peek() const override{
         if (curr_size_ == 0) {
-        throw std::runtime_error("Cannot peek from an empty stack");
-    }
+            throw std::runtime_error("Cannot peek from an empty stack");
+        }
         return array_[curr_size_ - 1];
     }
 
     T pop() override{
         if (curr_size_ == 0) {
-        throw std::runtime_error("Cannot peek from an empty stack");
+            throw std::runtime_error("Cannot peek from an empty stack");
         }
         T temp = array_[curr_size_ - 1];
-        array_[curr_size_] = 0;
         curr_size_--;
+
+        if (curr_size_ > 0 && curr_size_ * 4 < capacity_) {
+            size_t new_capacity = capacity_ / 2;
+            if (new_capacity < 1){
+                new_capacity = 1;
+            }
+            T* new_array = new T[new_capacity];
+            for (size_t i = 0; i < curr_size_; ++i){
+                new_array[i] = array_[i];
+            }
+            delete[] array_;
+            array_ = new_array;
+            capacity_ = new_capacity;
+        }
+
         return temp;
     }
 
