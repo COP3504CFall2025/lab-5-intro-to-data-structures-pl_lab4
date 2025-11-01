@@ -97,6 +97,9 @@ public:
 		if(head != nullptr){
 			head->prev = nullptr;
 		}
+		else{
+			tail = nullptr;
+		}
 
 		delete temp;
 		--count;
@@ -112,6 +115,9 @@ public:
 
 		if(tail != nullptr){
 			tail -> next = nullptr;
+		}
+		else{
+			head = nullptr;
 		}
 
 		delete temp;
