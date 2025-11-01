@@ -2,8 +2,6 @@
 #include <iostream>
 using namespace std;
 
-
-
 template <typename T>
 class LinkedList {
 private:
@@ -130,7 +128,7 @@ public:
 	}
 
 	void clear(){
-		while(RemoveHead());
+		while(removeHead());
 	}
 
 	// Operators
@@ -155,10 +153,10 @@ public:
 			return *this;
 		}
 
-		Clear();
+		clear();
 		Node* curr = rhs.head;
         while (curr) {
-            AddTail(curr->data);
+            addTail(curr->data);
             curr = curr->next;
         }
 
@@ -171,7 +169,7 @@ public:
 	LinkedList(const LinkedList<T>& list) : head(nullptr), tail(nullptr), count(0) {
     Node* curr = list.head;
     while (curr) {
-        AddTail(curr->data);
+        addTail(curr->data);
         curr = curr->next;
     }
 }
@@ -183,7 +181,7 @@ public:
 }
 
 	~LinkedList(){
-		Clear();
+		clear();
 	}
 
 private:
