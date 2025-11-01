@@ -25,14 +25,22 @@ public:
 
     // Deletion
     T dequeue() override{
-        T temp = list.getHead().getData();
+        if (list.getCount() == 0) {
+            throw std::runtime_error("Queue is empty");
+        }
+
+        T temp = list.getHead() -> getData();
         list.RemoveHead();
         return temp;
     }
 
     // Access
     T peek() const override{
-        return list.getHead().getData();
+        if (list.getCount() == 0) {
+            throw std::runtime_error("Queue is empty");
+        }
+        
+        return list.getHead() -> getData();
     }
 
     // Getter
