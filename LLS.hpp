@@ -20,24 +20,32 @@ public:
 
     // Insertion
     void push(const T& item) override{
-        list.addHead(item);
+        list.AddHead(item);
     }
 
     // Deletion
     T pop() override{
-        T temp = list -> head;
-        list.removeHead();
+        if (list.getCount() == 0) {
+            throw std::runtime_error("Queue is empty");
+        }
+
+        T temp = list.getHead() -> getData();
+        list.RemoveHead();
         return temp;
     }
 
     // Access
     T peek() const override{
-        return list -> head;
+        if (list.getCount() == 0) {
+            throw std::runtime_error("Queue is empty");
+        }
+        
+        return list.getHead() -> getData();
     }
 
     //Getters
     std::size_t getSize() const noexcept override{
-        return list -> count;
+        return list.getCount();
     }
 
     void PrintForward() const{
