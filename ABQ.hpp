@@ -119,11 +119,25 @@ public:
     T dequeue() override{
         if (curr_size_ == 0)
             throw std::runtime_error("Queue is empty");
-        return array_[0];
+        T temp = array_[0];
         for(size_t i = 0; i < curr_size_ - 1; ++i){
             array_[i] = array_[i + 1];
         }
         --curr_size_;
+
+        if (curr_size_ > 0 && curr_size_ <= capacity_ * kShrinkThreshold) {
+            size_t new_capacity = capacity_ / kScaleFactor;
+            if (new_capacity < 1)
+                new_capacity = 1;
+            T* new_array = new T[new_capacity];
+            for (size_t i = 0; i < curr_size_ && i < new_capacity; ++i)
+                new_array[i] = array_[i];
+            delete[] array_;
+            array_ = new_array;
+            capacity_ = new_capacity;
+        }
+
+        return temp;
     }
 
     void PrintForward() const{
