@@ -35,8 +35,7 @@ public:
             throw std::runtime_error("Empty deque");
         }
 
-        T* temp = list.getHead();
-        T value = temp.getData();
+        T value = list.getHead()->data;
         list.RemoveHead();
         return value;
     }
@@ -45,8 +44,7 @@ public:
             throw std::runtime_error("Empty deque");
         }
 
-        T* temp = list.getTail();
-        T value = temp.getData();
+        T value = list.getTail()->data;
         list.RemoveTail();
         return value;
     }
@@ -56,17 +54,13 @@ public:
         if (list.getCount() == 0){
             throw std::runtime_error("Empty deque");
         }
-        T* temp = list.getHead();
-        T value = temp.getData();
-        return value;
+        return list.getHead()->data;
     }
     const T& back() const override{
         if (list.getCount() == 0){
             throw std::runtime_error("Empty deque");
         }
-        T* temp = list.getTail();
-        T value = temp.getData();
-        return value;
+        return list.getTail()->data;
     }
 
     // Getter
