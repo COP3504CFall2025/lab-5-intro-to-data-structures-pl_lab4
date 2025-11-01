@@ -107,33 +107,29 @@ public:
     }
 
     T peek() const override{
-        if(curr_size_ != 0){
-            return array_[0];
-        }
-        else{
-            return 0;
-        }
+        if (curr_size_ == 0) {
+        throw std::runtime_error("Cannot peek from an empty stack");
+    }
+        return array_[curr_size_ - 1];
     }
 
     T pop() override{
-        if(curr_size_ != 0){
-            T temp = array_[curr_size_ - 1];
-            array_[curr_size_] = 0;
-            curr_size_--;
-            return array_[curr_size_];
+        if (curr_size_ == 0) {
+        throw std::runtime_error("Cannot peek from an empty stack");
         }
-        else{
-            return 0;
-        }
+        T temp = array_[curr_size_ - 1];
+        array_[curr_size_] = 0;
+        curr_size_--;
+        return temp;
     }
 
     void PrintForward() const{
-        for (size_t i = 0; i < curr_size_; ++i)
+        for (size_t i = 0; i < curr_size_ -1 ; ++i)
             std::cout << array_[i] << std::endl;
     }
 
     void PrintReverse() const{
-        for (size_t i = curr_size_; i > 0; --i)
+        for (size_t i = curr_size_ -1 ; i > 0; --i)
             std::cout << array_[i] << std::endl;
     }
 
