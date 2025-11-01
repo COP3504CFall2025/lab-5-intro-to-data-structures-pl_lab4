@@ -20,7 +20,7 @@ public:
 
     // Insertion
     void push(const T& item) override{
-        list.AddHead(item);
+        list.addHead(item);
     }
 
     // Deletion
@@ -30,7 +30,7 @@ public:
         }
 
         T temp = list.getHead() -> getData();
-        list.RemoveHead();
+        list.removeHead();
         return temp;
     }
 
@@ -49,10 +49,10 @@ public:
     }
 
     void PrintForward() const{
-        list.PrintForward();
+        list.printForward();
     }
 
     void PrintReverse() const{
-        list.PrintReverse();
+        list.printReverse();
     }
 };

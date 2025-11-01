@@ -23,10 +23,10 @@ public:
 
     // Core Insertion Operations
     void pushFront(const T& item) override{
-        list.AddHead(item);
+        list.addHead(item);
     }
     void pushBack(const T& item) override{
-        list.AddTail(item);
+        list.addTail(item);
     }
 
     // Core Removal Operations
@@ -36,7 +36,7 @@ public:
         }
 
         T value = list.getHead()->data;
-        list.RemoveHead();
+        list.removeHead();
         return value;
     }
     T popBack() override{
@@ -45,7 +45,7 @@ public:
         }
 
         T value = list.getTail()->data;
-        list.RemoveTail();
+        list.removeTail();
         return value;
     }
 
@@ -69,11 +69,11 @@ public:
     }
 
     void PrintForward() const{
-        list.PrintForward();
+        list.printForward();
     }
 
     void PrintReverse() const{
-        list.PrintReverse();
+        list.printReverse();
     }
 };
 
