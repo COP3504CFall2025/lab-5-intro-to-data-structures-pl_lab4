@@ -27,7 +27,7 @@ private:
     };
 public:
 	// Behaviors
-	void PrintForward() const{
+	void printForward() const{
 		Node* curr = head;
 		while (curr != nullptr) {
 			cout << curr->data << endl;
