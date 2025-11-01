@@ -24,6 +24,10 @@ private:
 		T getData(){
 			return data;
 		}
+		
+		T getData() const {
+    		return data;
+		}
     };
 public:
 	// Behaviors
