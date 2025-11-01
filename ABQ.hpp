@@ -19,7 +19,7 @@ class ABQ : public QueueInterface<T>{
 public:
     // Constructors + Big 5
     ABQ(){
-        capacity_ = 0;
+        capacity_ = 1;
         curr_size_ = 0;
         array_ = new T[capacity_];
     }
@@ -76,7 +76,7 @@ public:
         return *this;
     }
 
-    ~ABQ() noexcept override{
+    ~ABQ() noexcept{
         capacity_ = 0;
         curr_size_ = 0;
         delete[] array_;
@@ -109,11 +109,16 @@ public:
 
     // Access
     T peek() const override{
+        if (curr_size_ == 0){
+            throw std::runtime_error("Queue is empty");
+        }
         return array_[0];
     }
 
     // Deletion
     T dequeue() override{
+        if (curr_size_ == 0)
+            throw std::runtime_error("Queue is empty");
         return array_[0];
         for(size_t i = 0; i < curr_size_ - 1; ++i){
             array_[i] = array_[i + 1];
@@ -127,7 +132,7 @@ public:
     }
 
     void PrintReverse() const{
-        for (size_t i = curr_size_; i > 0; --i)
+        for (size_t i = curr_size_ - 1; i > 0; --i)
             std::cout << array_[i] << std::endl;
     }
 
