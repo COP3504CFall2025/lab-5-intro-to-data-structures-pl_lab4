@@ -71,7 +71,7 @@ public:
         return *this;
     }
 
-    ~ABS() noexcept override{
+    ~ABS() noexcept{
         capacity_ = 0;
         curr_size_ = 0;
         delete[] array_;
