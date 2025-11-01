@@ -20,19 +20,19 @@ public:
 
     // Insertion
     void enqueue(const T& item) override{
-        list.addTail(item);
+        list.AddTail(item);
     }
 
     // Deletion
     T dequeue() override{
         T temp = list -> head;
-        list.removeHead();
+        list.RemoveHead();
         return temp;
     }
 
     // Access
     T peek() const override{
-        return list -> head;
+        return list.GetHead() -> data;
     }
 
     // Getter
