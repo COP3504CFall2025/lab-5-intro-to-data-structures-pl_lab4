@@ -116,7 +116,7 @@ public:
             ensureCapacity();
         }
 
-        data_[back_] = item;
+        data_[back_ + 1] = item;
         back_ = (back_ + 1) % capacity_;
         ++size_;
     }
@@ -156,7 +156,7 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Empty deque");
         }
-        return data_[back_ - 1];
+        return data_[back_];
     }
 
     // Getters
@@ -175,7 +175,7 @@ public:
         data_ = new_array;
         capacity_ *= 2;
         front_ = 0;
-        back_ = size_;
+        back_ = size_ - 1;
     }
 
     void shrinkIfNeeded(){
@@ -195,7 +195,7 @@ public:
         data_ = new_array;
         capacity_ = new_capacity;
         front_ = 0;
-        back_ = size_;
+        back_ = size_ - 1;
     }
 
     void PrintForward() const{
