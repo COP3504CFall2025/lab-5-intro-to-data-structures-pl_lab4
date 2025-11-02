@@ -4,16 +4,15 @@
 #include <stdexcept>
 #include "Interfaces.hpp"
 #include <utility>
-#include <iostream>
 
 template <typename T>
 class ABDQ : public DequeInterface<T> {
 private:
-    T* data_;                 // underlying dynamic array
-    std::size_t capacity_;    // total allocated capacity
-    std::size_t size_;        // number of stored elements
-    std::size_t front_;       // index of front element
-    std::size_t back_;        // index after the last element (circular)
+    T* data_;                 
+    std::size_t capacity_;    
+    std::size_t size_;        
+    std::size_t front_;       
+    std::size_t back_;       
 
 public:
     // Big 5
@@ -33,7 +32,7 @@ public:
         data_ = new T[capacity];
     }
 
-    ABDQ(const ABDQ& other): data_(new T[other.capacity_]), capacity_(other.capacity_), size_(other.size_), front_(0), back_(other.size_ - 1) 
+    ABDQ(const ABDQ& other): data_(new T[other.capacity_]), capacity_(other.capacity_), size_(other.size_), front_(0), back_(other.back_) 
     {
         for (std::size_t i = 0; i < other.size_; ++i) {
             data_[i] = other.data_[(other.front_ + i) % other.capacity_];
@@ -57,7 +56,7 @@ public:
 
         delete[] data_;
 
-        for (std::size_t i = 0; i < other.size_; ++i) {
+        for (std::size_t i = 0; i < other.size_; ++i){
             newData[i] = other.data_[(other.front_ + i) % other.capacity_];
         }
 
@@ -66,7 +65,7 @@ public:
         capacity_ = other.capacity_;
         size_ = other.size_;
         front_ = 0;
-        back_ = other.size_ - 1;
+        back_ = other.size_;
 
         return *this;
     }
@@ -93,11 +92,6 @@ public:
 
     ~ABDQ(){
         delete[] data_;
-        data_ = nullptr;
-        size_ = 0;
-        capacity_ = 0;
-        front_ = 0;
-        back_ = 0;
     }
 
     // Insertion
@@ -106,7 +100,7 @@ public:
             ensureCapacity();
         }
 
-        front_ = (front_ - 1) % capacity_;
+        front_ = (front_ + capacity_ - 1) % capacity_;
         data_[front_] = item;
         ++size_;
     }
@@ -116,7 +110,7 @@ public:
             ensureCapacity();
         }
 
-        data_[back_ + 1] = item;
+        data_[back_] = item;
         back_ = (back_ + 1) % capacity_;
         ++size_;
     }
@@ -126,10 +120,11 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Empty deque");
         }
-        
+
         T temp = data_[front_];
         front_ = (front_ + 1) % capacity_;
         --size_;
+
         return temp;
     }
 
@@ -138,9 +133,10 @@ public:
             throw std::runtime_error("Empty deque");
         }
 
+        back_ = (back_ + capacity_ - 1) % capacity_;
         T temp = data_[back_];
-        back_ = (back_ - 1) % capacity_;
         --size_;
+
         return temp;
     }
 
@@ -149,6 +145,7 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Empty deque");
         }
+
         return data_[front_];
     }
 
@@ -156,7 +153,8 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Empty deque");
         }
-        return data_[back_];
+
+        return data_[(back_ + capacity_ - 1) % capacity_];
     }
 
     // Getters
@@ -175,7 +173,7 @@ public:
         data_ = new_array;
         capacity_ *= 2;
         front_ = 0;
-        back_ = size_ - 1;
+        back_ = size_;
     }
 
     void shrinkIfNeeded(){
@@ -195,7 +193,7 @@ public:
         data_ = new_array;
         capacity_ = new_capacity;
         front_ = 0;
-        back_ = size_ - 1;
+        back_ = size_;
     }
 
     void PrintForward() const{
@@ -209,4 +207,5 @@ public:
             std::cout << data_[(front_ + i) % capacity_] << std::endl;
         }
     }
+
 };
