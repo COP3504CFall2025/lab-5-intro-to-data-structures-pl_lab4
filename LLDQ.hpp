@@ -25,6 +25,7 @@ public:
     void pushFront(const T& item) override{
         list.addHead(item);
     }
+
     void pushBack(const T& item) override{
         list.addTail(item);
     }
@@ -39,6 +40,7 @@ public:
         list.removeHead();
         return value;
     }
+
     T popBack() override{
         if (list.getCount() == 0){
             throw std::runtime_error("Empty deque");
@@ -56,10 +58,12 @@ public:
         }
         return list.getHead()->data;
     }
+
     const T& back() const override{
         if (list.getCount() == 0){
             throw std::runtime_error("Empty deque");
         }
+        
         return list.getTail()->data;
     }
 
