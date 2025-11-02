@@ -88,7 +88,6 @@ public:
 		else{
 			head = node;
 		}
-
 		tail = node;
     	++count;
 	}
@@ -99,6 +98,7 @@ public:
 			return false;
 		}
 
+		Node* temp = head;
     	head = head->next;
 
 		if(head != nullptr){
@@ -108,6 +108,7 @@ public:
 			tail = nullptr;
 		}
 
+		delete temp;
 		--count;
 		return true;
 	}
@@ -117,6 +118,7 @@ public:
 			return false;
 		}
 
+		Node* temp = tail;
     	tail = tail -> prev;
 
 		if(tail != nullptr){
@@ -126,6 +128,7 @@ public:
 			head = nullptr;
 		}
 
+		delete temp;
 		--count;
 		return true;
 	}
@@ -157,12 +160,12 @@ public:
 		}
 
 		clear();
+		
 		Node* curr = rhs.head;
-        while (curr != nullptr) {
+        while (curr) {
             addTail(curr->data);
             curr = curr->next;
         }
-
 		return *this;
 	}
 
@@ -174,10 +177,10 @@ public:
 	}
 	
 	LinkedList(const LinkedList<T>& list) : head(nullptr), tail(nullptr), count(0) {
-    Node* curr = list.head;
-    while (curr) {
-        addTail(curr->data);
-        curr = curr->next;
+		Node* curr = list.head;
+		while (curr) {
+			addTail(curr->data);
+			curr = curr->next;
 		}
 	}
 
