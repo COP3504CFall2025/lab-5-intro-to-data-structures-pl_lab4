@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include "Interfaces.hpp"
 #include <utility>
+#include <iostream>
 
 template <typename T>
 class ABDQ : public DequeInterface<T> {
@@ -92,11 +93,11 @@ public:
 
     ~ABDQ(){
         delete[] data_;
-        other.data_ = nullptr;
-        other.size_ = 0;
-        other.capacity_ = 0;
-        other.front_ = 0;
-        other.back_ = 0;
+        data_ = nullptr;
+        size_ = 0;
+        capacity_ = 0;
+        front_ = 0;
+        back_ = 0;
     }
 
     // Insertion
@@ -198,14 +199,14 @@ public:
     }
 
     void PrintForward() const{
-        for (size_t i = 0; i < curr_size_; ++i){
-            std::cout << array_[(front_ + i) % capacity_] << std::endl;
+        for (size_t i = 0; i < size_; ++i){
+            std::cout << data_[(front_ + i) % capacity_] << std::endl;
         }
     }
 
     void PrintReverse() const{
-        for (size_t i = curr_size_ - 1; i > 0; --i){
-            std::cout << array_[(front_ + i) % capacity_] << std::endl;
+        for (size_t i = size_ - 1; i > 0; --i){
+            std::cout << data_[(front_ + i) % capacity_] << std::endl;
         }
     }
 };
