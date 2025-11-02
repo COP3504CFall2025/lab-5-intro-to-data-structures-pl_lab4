@@ -44,6 +44,7 @@ public:
         for(std::size_t i = 0; i < curr_size_; ++i){
             array_[i] = rhs.array_[i];
         }
+
         return *this;
     }
 
@@ -67,7 +68,6 @@ public:
         rhs.array_ = new T[1];
         rhs.curr_size_ = 0;
         rhs.capacity_ = 1;
-
         return *this;
     }
 
@@ -96,15 +96,13 @@ public:
     void push(const T& data) override{
         if(curr_size_ >= capacity_){
             T* new_array = new T[capacity_ * 2];
-
             for(std::size_t i = 0; i < curr_size_; ++i){
                 new_array[i] = array_[i];
             }
 
             delete[] array_;
-
             array_ = new_array;
-            capacity_ *= 2;
+            capacity_ *= scale_factor_;
         }
 
         array_[curr_size_++] = data;
@@ -114,7 +112,6 @@ public:
         if (curr_size_ == 0) {
             throw std::runtime_error("Empty stack");
         }
-
         return array_[curr_size_ - 1];
     }
 
@@ -122,7 +119,6 @@ public:
         if (curr_size_ == 0) {
             throw std::runtime_error("Empty stack");
         }
-
         T temp = array_[curr_size_ - 1];
         curr_size_--;
 

@@ -10,9 +10,11 @@ using std::size_t;
 
 template<typename T>
 class ABQ : public QueueInterface<T>{
+
     size_t capacity_;
     size_t curr_size_;
     T* array_;
+    static constexpr size_t scale_factor_ = 2;
 
 public:
     // Constructors + Big 5
@@ -21,7 +23,6 @@ public:
         curr_size_ = 0;
         array_ = new T[capacity_];
     }
-    
     explicit ABQ(const size_t capacity){
         capacity_ = capacity;
         curr_size_ = 0;
@@ -95,23 +96,21 @@ public:
     // Insertion
     void enqueue(const T& data) override{
         if(curr_size_ >= capacity_){
-            T* new_array = new T[capacity_ * 2];
+            T* new_array = new T[capacity_ * scale_factor_];
             for(std::size_t i = 0; i < curr_size_; ++i){
                 new_array[i] = array_[i];
             }
-
             delete[] array_;
             array_ = new_array;
-            capacity_ *= 2;
+            capacity_ *= scale_factor_;
         }
-
         array_[curr_size_++] = data;
     }
 
     // Access
     T peek() const override{
         if (curr_size_ == 0){
-            throw std::runtime_error("Empty queue");
+            throw std::runtime_error("Queue is empty");
         }
         return array_[0];
     }
@@ -119,28 +118,21 @@ public:
     // Deletion
     T dequeue() override{
         if (curr_size_ == 0)
-            throw std::runtime_error("Empty queue");
+            throw std::runtime_error("Queue is empty");
         T temp = array_[0];
 
         for(size_t i = 0; i < curr_size_ - 1; ++i){
             array_[i] = array_[i + 1];
         }
-
         --curr_size_;
 
         if (curr_size_ * 2 < capacity_) {
             size_t new_capacity = capacity_ / 2;
-
-            if (new_capacity < 1){
+            if (new_capacity < 1)
                 new_capacity = 1;
-            }
-
             T* new_array = new T[new_capacity];
-
-            for (size_t i = 0; i < curr_size_ && i < new_capacity; ++i){
+            for (size_t i = 0; i < curr_size_ && i < new_capacity; ++i)
                 new_array[i] = array_[i];
-            }
-
             delete[] array_;
             array_ = new_array;
             capacity_ = new_capacity;
@@ -150,15 +142,13 @@ public:
     }
 
     void PrintForward() const{
-        for (size_t i = 0; i < curr_size_; ++i){
+        for (size_t i = 0; i < curr_size_; ++i)
             std::cout << array_[i] << std::endl;
-        }
     }
 
     void PrintReverse() const{
-        for (size_t i = curr_size_ - 1; i > 0; --i){
+        for (size_t i = curr_size_ - 1; i > 0; --i)
             std::cout << array_[i] << std::endl;
-        }
     }
 
 };
