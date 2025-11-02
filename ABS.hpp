@@ -102,7 +102,7 @@ public:
 
             delete[] array_;
             array_ = new_array;
-            capacity_ *= scale_factor_;
+            capacity_ *= 2;
         }
 
         array_[curr_size_++] = data;
