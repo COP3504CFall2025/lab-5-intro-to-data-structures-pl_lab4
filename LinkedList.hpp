@@ -14,11 +14,13 @@ private:
 			prev = nullptr;
 			next = nullptr;
 		}
+
         Node(const T& value){
 			data = value;
 			prev = nullptr;
 			next = nullptr;
 		}
+
 		T getData(){
 			return data;
 		}
@@ -27,6 +29,7 @@ private:
     		return data;
 		}
     };
+
 public:
 	// Behaviors
 	void printForward() const{
@@ -36,6 +39,7 @@ public:
 			curr = curr->next;
 		}
 	}
+
 	void printReverse() const{
 		Node* curr = tail;
 		while (curr != nullptr) {
@@ -74,6 +78,7 @@ public:
 		head = node;
     	++count;
 	}
+
 	void addTail(const T& data){
 		Node* node = new Node(data);
 		node -> prev = tail;
@@ -83,6 +88,7 @@ public:
 		else{
 			head = node;
 		}
+
 		tail = node;
     	++count;
 	}
@@ -93,7 +99,6 @@ public:
 			return false;
 		}
 
-		Node* temp = head;
     	head = head->next;
 
 		if(head != nullptr){
@@ -103,16 +108,15 @@ public:
 			tail = nullptr;
 		}
 
-		delete temp;
 		--count;
 		return true;
 	}
+
 	bool removeTail(){
 		if(tail == nullptr){
 			return false;
 		}
 
-		Node* temp = tail;
     	tail = tail -> prev;
 
 		if(tail != nullptr){
@@ -122,7 +126,6 @@ public:
 			head = nullptr;
 		}
 
-		delete temp;
 		--count;
 		return true;
 	}
@@ -155,7 +158,7 @@ public:
 
 		clear();
 		Node* curr = rhs.head;
-        while (curr) {
+        while (curr != nullptr) {
             addTail(curr->data);
             curr = curr->next;
         }
@@ -164,21 +167,25 @@ public:
 	}
 
 	// Construction/Destruction
-	LinkedList(): head(nullptr), tail(nullptr), count(0) {}
+	LinkedList(){
+		head = nullptr;
+		tail = nullptr;
+		count = 0;
+	}
 	
 	LinkedList(const LinkedList<T>& list) : head(nullptr), tail(nullptr), count(0) {
     Node* curr = list.head;
     while (curr) {
         addTail(curr->data);
         curr = curr->next;
-    }
-}
+		}
+	}
 
 	LinkedList(LinkedList<T>&& other) noexcept : head(other.head), tail(other.tail), count(other.count) {
-    other.head = nullptr;
-    other.tail = nullptr;
-    other.count = 0;
-}
+		other.head = nullptr;
+		other.tail = nullptr;
+		other.count = 0;
+	}
 
 	~LinkedList(){
 		clear();
