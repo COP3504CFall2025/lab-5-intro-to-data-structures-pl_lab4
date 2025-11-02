@@ -44,7 +44,6 @@ public:
         for(std::size_t i = 0; i < curr_size_; ++i){
             array_[i] = rhs.array_[i];
         }
-
         return *this;
     }
 
@@ -68,6 +67,7 @@ public:
         rhs.array_ = new T[1];
         rhs.curr_size_ = 0;
         rhs.capacity_ = 1;
+
         return *this;
     }
 
@@ -95,28 +95,34 @@ public:
     // Push item onto the stack
     void push(const T& data) override{
         if(curr_size_ >= capacity_){
-            T* new_array = new T[capacity_ * scale_factor_];
+            T* new_array = new T[capacity_ * 2];
+
             for(std::size_t i = 0; i < curr_size_; ++i){
                 new_array[i] = array_[i];
             }
+
             delete[] array_;
+
             array_ = new_array;
-            capacity_ *= scale_factor_;
+            capacity_ *= 2;
         }
+
         array_[curr_size_++] = data;
     }
 
     T peek() const override{
         if (curr_size_ == 0) {
-            throw std::runtime_error("Cannot peek from an empty stack");
+            throw std::runtime_error("Empty stack");
         }
+
         return array_[curr_size_ - 1];
     }
 
     T pop() override{
         if (curr_size_ == 0) {
-            throw std::runtime_error("Cannot peek from an empty stack");
+            throw std::runtime_error("Empty stack");
         }
+
         T temp = array_[curr_size_ - 1];
         curr_size_--;
 
@@ -125,15 +131,17 @@ public:
             if (new_capacity < 1){
                 new_capacity = 1;
             }
+
             T* new_array = new T[new_capacity];
+
             for (size_t i = 0; i < curr_size_; ++i){
                 new_array[i] = array_[i];
             }
+
             delete[] array_;
             array_ = new_array;
             capacity_ = new_capacity;
         }
-
         return temp;
     }
 
@@ -151,5 +159,4 @@ private:
     size_t capacity_;
     size_t curr_size_;
     T* array_;
-    static constexpr size_t scale_factor_ = 2;
 };
