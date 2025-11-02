@@ -33,7 +33,7 @@ public:
         data_ = new T[capacity];
     }
 
-    ABDQ(const ABDQ& other): data_(new T[other.capacity_]), capacity_(other.capacity_), size_(other.size_), front_(0), back_(other.back_) 
+    ABDQ(const ABDQ& other): data_(new T[other.capacity_]), capacity_(other.capacity_), size_(other.size_), front_(0), back_(other.size_ - 1) 
     {
         for (std::size_t i = 0; i < other.size_; ++i) {
             data_[i] = other.data_[(other.front_ + i) % other.capacity_];
@@ -66,7 +66,7 @@ public:
         capacity_ = other.capacity_;
         size_ = other.size_;
         front_ = 0;
-        back_ = other.size_;
+        back_ = other.size_ - 1;
 
         return *this;
     }
