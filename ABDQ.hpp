@@ -156,7 +156,7 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Empty deque");
         }
-        return data_[back_];
+        return data_[back_ - 1];
     }
 
     // Getters
