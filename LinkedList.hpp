@@ -2,34 +2,34 @@
 #include <iostream>
 using namespace std;
 
-template<typename T>
-class Node {
-	T data;
-	Node* prev;
-	Node* next;
-	friend class LinkedList;
-	
-	Node(){
-		prev = nullptr;
-		next = nullptr;
-	}
-
-	Node(const T& value){
-		data = value;
-		prev = nullptr;
-		next = nullptr;
-	}
-
-	T getData(){
-		return data;
-	}
-	
-	T getData() const {
-		return data;
-	}
-};
-
+template <typename T>
 class LinkedList {
+private:
+	struct Node {
+        T data;
+        Node* prev;
+        Node* next;
+		
+		Node(){
+			prev = nullptr;
+			next = nullptr;
+		}
+
+        Node(const T& value){
+			data = value;
+			prev = nullptr;
+			next = nullptr;
+		}
+
+		T getData(){
+			return data;
+		}
+		
+		T getData() const {
+    		return data;
+		}
+    };
+
 public:
 	// Behaviors
 	void printForward() const{
