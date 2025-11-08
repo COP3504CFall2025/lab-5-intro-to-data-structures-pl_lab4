@@ -29,7 +29,6 @@ class Node {
 	}
 };
 
-template <typename T>
 class LinkedList {
 public:
 	// Behaviors
