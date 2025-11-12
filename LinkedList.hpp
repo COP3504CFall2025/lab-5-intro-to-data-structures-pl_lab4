@@ -3,7 +3,7 @@
 using namespace std;
 
 template <typename T>
-class Node {
+struct Node {
         T data;
         Node* prev;
         Node* next;
@@ -21,6 +21,11 @@ class Node {
 			next = nullptr;
 		}
 
+		~Node(){
+			prev = nullptr;
+			next = nullptr;
+		}
+
 		T getData(){
 			return data;
 		}
@@ -30,7 +35,6 @@ class Node {
 		}
     };
 
-template <typename T>
 class LinkedList {
 public:
 	// Behaviors
@@ -140,7 +144,7 @@ public:
 	}
 
 	// Operators
-	LinkedList<T>& operator=(LinkedList<T>&& other) noexcept{
+	LinkedList& operator=(LinkedList&& other) noexcept{
 		if(this == &other){
 			return *this;
 		}
@@ -156,7 +160,7 @@ public:
 		return *this;
 	}
 
-	LinkedList<T>& operator=(const LinkedList<T>& rhs){
+	LinkedList& operator=(const LinkedList& rhs){
 		if (this == &rhs){
 			return *this;
 		}
@@ -178,7 +182,7 @@ public:
 		count = 0;
 	}
 	
-	LinkedList(const LinkedList<T>& list) : head(nullptr), tail(nullptr), count(0) {
+	LinkedList(const LinkedList& list) : head(nullptr), tail(nullptr), count(0) {
 		Node* curr = list.head;
 		while (curr) {
 			addTail(curr->data);
@@ -186,7 +190,7 @@ public:
 		}
 	}
 
-	LinkedList(LinkedList<T>&& other) noexcept : head(other.head), tail(other.tail), count(other.count) {
+	LinkedList(LinkedList&& other) noexcept : head(other.head), tail(other.tail), count(other.count) {
 		other.head = nullptr;
 		other.tail = nullptr;
 		other.count = 0;
