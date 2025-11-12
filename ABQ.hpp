@@ -13,20 +13,13 @@ class ABQ : public QueueInterface<T>{
     size_t capacity_;
     size_t curr_size_;
     T* array_;
+    static constexpr size_t scale_factor_ = 2;
 
 public:
     // Constructors + Big 5
-    ABQ(){
-        capacity_ = 1;
-        curr_size_ = 0;
-        array_ = new T[capacity_];
-    }
+    ABQ(): capacity_(1), curr_size_(1), array_(new T[capacity_]){}
 
-    explicit ABQ(const size_t capacity){
-        capacity_ = capacity;
-        curr_size_ = 0;
-        array_ = new T[capacity_];
-    }
+    explicit ABQ(const size_t capacity): capacity_(capacity), curr_size_(0), array_(new T[capacity_]){}
 
     ABQ(const ABQ& other): capacity_(other.capacity_), curr_size_(other.curr_size_), array_(new T[other.capacity_]){
         for(std::size_t i = 0; i < curr_size_; ++i){
@@ -82,20 +75,14 @@ public:
     }
 
     // Getters
-    [[nodiscard]] size_t getSize() const noexcept override{
-        return curr_size_;
-    }
-    [[nodiscard]] size_t getMaxCapacity() const noexcept{
-        return capacity_;
-    }
-    [[nodiscard]] T* getData() const noexcept{
-        return array_;
-    }
+    [[nodiscard]] size_t getSize() const noexcept override{return curr_size_;}
+    [[nodiscard]] size_t getMaxCapacity() const noexcept{return capacity_;}
+    [[nodiscard]] T* getData() const noexcept{return array_;}
 
     // Insertion
     void enqueue(const T& data) override{
         if(curr_size_ >= capacity_){
-            T* new_array = new T[capacity_ * 2];
+            T* new_array = new T[capacity_ * scale_factor_];
 
             for(std::size_t i = 0; i < curr_size_; ++i){
                 new_array[i] = array_[i];
@@ -103,7 +90,7 @@ public:
 
             delete[] array_;
             array_ = new_array;
-            capacity_ *= 2;
+            capacity_ *= scale_factor_;
         }
         
         array_[curr_size_++] = data;
@@ -114,7 +101,6 @@ public:
         if (curr_size_ == 0){
             throw std::runtime_error("Empty queue");
         }
-
         return array_[0];
     }
 
@@ -123,7 +109,6 @@ public:
         if (curr_size_ == 0){
             throw std::runtime_error("Empty queue");
         }
-
         T temp = array_[0];
 
         for(size_t i = 0; i < curr_size_ - 1; ++i){
