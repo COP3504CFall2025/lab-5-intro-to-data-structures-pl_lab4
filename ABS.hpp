@@ -91,8 +91,8 @@ public:
             capacity_ *= scale_factor_;
         }
 
-        curr_size_++;
         array_[curr_size_] = data;
+        curr_size_++;
     }
 
     T peek() const override{
