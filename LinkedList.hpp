@@ -8,6 +8,7 @@ struct Node {
         Node* prev;
         Node* next;
 
+		template<typename U>; //https://stackoverflow.com/questions/8967521/class-template-with-template-class-friend-whats-really-going-on-here
 		friend class LinkedList;
 		
 		Node(){
