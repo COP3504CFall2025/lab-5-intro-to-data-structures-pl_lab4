@@ -92,7 +92,7 @@ public:
         }
 
         array_[curr_size_] = data;
-        curr_size_++;
+        ++curr_size_;
     }
 
     T peek() const override{

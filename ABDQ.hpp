@@ -20,7 +20,6 @@ private:
 public:
     // Big 5
     ABDQ() : capacity_(4), size_(0), front_(0), back_(0), data_(new T[4]){}
-
     explicit ABDQ(std::size_t capacity): capacity_(capacity), size_(0), front_(0), back_(0), data_(new T[4]){}
 
     ABDQ(const ABDQ& other): data_(new T[other.capacity_]), capacity_(other.capacity_), size_(other.size_), front_(0), back_(other.back_) 
@@ -91,7 +90,7 @@ public:
             ensureCapacity();
         }
 
-        front_ = (front_ + capacity_ - 1) % capacity_;
+        front_ = (front_ - 1) % capacity_;
         data_[front_] = item;
         ++size_;
     }
@@ -124,7 +123,7 @@ public:
             throw std::runtime_error("Empty deque");
         }
 
-        back_ = (back_ + capacity_ - 1) % capacity_;
+        back_ = (back_ - 1) % capacity_;
         T temp = data_[back_];
         --size_;
 
@@ -145,7 +144,7 @@ public:
             throw std::runtime_error("Empty deque");
         }
 
-        return data_[(back_ + capacity_ - 1) % capacity_];
+        return data_[(back_ - 1) % capacity_];
     }
 
     // Getters
@@ -154,7 +153,7 @@ public:
     }
 
     void ensureCapacity(){
-        T* new_array = new T[capacity_ * 2];
+        T* new_array = new T[capacity_ * SCALE_FACTOR];
 
         for(std::size_t i = 0; i < size_; ++i){
             new_array[i] = data_[(front_ + i) % capacity_];
@@ -162,7 +161,7 @@ public:
 
         delete[] data_;
         data_ = new_array;
-        capacity_ *= 2;
+        capacity_ *= SCALE_FACTOR;
         front_ = 0;
         back_ = size_;
     }
