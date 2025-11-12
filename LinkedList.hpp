@@ -3,12 +3,12 @@
 using namespace std;
 
 template <typename T>
-class LinkedList {
-private:
-	struct Node {
+class Node {
         T data;
         Node* prev;
         Node* next;
+
+		friend class LinkedList;
 		
 		Node(){
 			prev = nullptr;
@@ -30,6 +30,8 @@ private:
 		}
     };
 
+template <typename T>
+class LinkedList {
 public:
 	// Behaviors
 	void printForward() const{
