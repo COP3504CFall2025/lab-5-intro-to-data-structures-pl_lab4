@@ -1,4 +1,3 @@
-
 #pragma once
 #include <iostream>
 using namespace std;
@@ -11,24 +10,10 @@ private:
         Node* prev;
         Node* next;
 		
-		Node(){
-			prev = nullptr;
-			next = nullptr;
-		}
-
-        Node(const T& value){
-			data = value;
-			prev = nullptr;
-			next = nullptr;
-		}
-
-		T getData(){
-			return data;
-		}
-		
-		T getData() const {
-    		return data;
-		}
+		Node() : prev(nullptr), next(nullptr){}
+        Node(const T& value): data(value), prev(nullptr), next(nullptr){}
+		T getData(){return data;}
+		T getData() const {return data;}
     };
 
 public:
@@ -50,21 +35,11 @@ public:
 	}
 
 	// Accessors
-	[[nodiscard]] unsigned int getCount() const{
-		return count;
-	}
-	Node* getHead(){
-		return head;
-	}
-	const Node* getHead() const{
-		return head;
-	}
-	Node* getTail(){
-		return tail;
-	}
-	const Node* getTail() const{
-		return tail;
-	}
+	[[nodiscard]] unsigned int getCount() const{return count;}
+	Node* getHead(){return head;}
+	const Node* getHead() const{return head;}
+	Node* getTail(){return tail;}
+	const Node* getTail() const{return tail;}
 
 	// Insertion
 	void addHead(const T& data){

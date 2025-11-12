@@ -15,6 +15,8 @@ private:
     std::size_t front_;       
     std::size_t back_;       
 
+    static constexpr std::size_t SCALE_FACTOR = 2;
+    
 public:
     // Big 5
     ABDQ(){
