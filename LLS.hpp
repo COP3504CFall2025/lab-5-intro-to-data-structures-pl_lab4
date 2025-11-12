@@ -12,11 +12,6 @@ private:
 public:
     // Constructor
     LLS() = default;
-    LLS(const LLS& other) = default;
-    LLS(LLS&& other) noexcept = default;
-    LLS& operator=(const LLS& other) = default;
-    LLS& operator=(LLS&& other) noexcept = default;
-    ~LLS() = default;
 
     // Insertion
     void push(const T& item) override{

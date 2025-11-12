@@ -6,8 +6,6 @@
 #include "LinkedList.hpp"
 #include <utility>
 
-
-
 template <typename T>
 class LLDQ : public DequeInterface<T> {
 private:
@@ -15,11 +13,6 @@ private:
 public:
     // Constructor
     LLDQ() = default;
-    LLDQ(const LLDQ& other) = default;
-    LLDQ(LLDQ&& other) noexcept = default;
-    LLDQ& operator=(const LLDQ& other) = default;
-    LLDQ& operator=(LLDQ&& other) noexcept = default;
-    ~LLDQ() = default;
 
     // Core Insertion Operations
     void pushFront(const T& item) override{

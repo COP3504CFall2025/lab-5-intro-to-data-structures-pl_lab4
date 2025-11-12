@@ -12,11 +12,6 @@ private:
 public:
     // Constructor
     LLQ() = default;
-    LLQ(const LLQ& other) = default;
-    LLQ(LLQ&& other) noexcept = default;
-    LLQ& operator=(const LLQ& other) = default;
-    LLQ& operator=(LLQ&& other) noexcept = default;
-    ~LLQ() = default;
 
     // Insertion
     void enqueue(const T& item) override{
