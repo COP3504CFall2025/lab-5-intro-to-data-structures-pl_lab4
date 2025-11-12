@@ -3,13 +3,12 @@
 using namespace std;
 
 template <typename T>
-struct Node {
+class LinkedList {
+private:
+	struct Node {
         T data;
         Node* prev;
         Node* next;
-
-		template<typename U>; //https://stackoverflow.com/questions/8967521/class-template-with-template-class-friend-whats-really-going-on-here
-		friend class LinkedList;
 		
 		Node(){
 			prev = nullptr;
@@ -18,11 +17,6 @@ struct Node {
 
         Node(const T& value){
 			data = value;
-			prev = nullptr;
-			next = nullptr;
-		}
-
-		~Node(){
 			prev = nullptr;
 			next = nullptr;
 		}
@@ -36,12 +30,10 @@ struct Node {
 		}
     };
 
-template <typename T>
-class LinkedList {
 public:
 	// Behaviors
 	void printForward() const{
-		Node<T>* curr = head;
+		Node* curr = head;
 		while (curr != nullptr) {
 			cout << curr->data << endl;
 			curr = curr->next;
@@ -49,7 +41,7 @@ public:
 	}
 
 	void printReverse() const{
-		Node<T>* curr = tail;
+		Node* curr = tail;
 		while (curr != nullptr) {
 			cout << curr->data << endl;
 			curr = curr->prev;
@@ -60,22 +52,22 @@ public:
 	[[nodiscard]] unsigned int getCount() const{
 		return count;
 	}
-	Node<T>* getHead(){
+	Node* getHead(){
 		return head;
 	}
-	const Node<T>* getHead() const{
+	const Node* getHead() const{
 		return head;
 	}
-	Node<T>* getTail(){
+	Node* getTail(){
 		return tail;
 	}
-	const Node<T>* getTail() const{
+	const Node* getTail() const{
 		return tail;
 	}
 
 	// Insertion
 	void addHead(const T& data){
-		Node<T>* node = new Node(data);
+		Node* node = new Node(data);
 		node -> next = head;
 		if(head != nullptr){
 			head->prev = node;
@@ -88,7 +80,7 @@ public:
 	}
 
 	void addTail(const T& data){
-		Node<T>* node = new Node(data);
+		Node* node = new Node(data);
 		node -> prev = tail;
 		if(tail != nullptr){
 			tail->next = node;
@@ -106,7 +98,7 @@ public:
 			return false;
 		}
 
-		Node<T>* temp = head;
+		Node* temp = head;
     	head = head->next;
 
 		if(head != nullptr){
@@ -126,7 +118,7 @@ public:
 			return false;
 		}
 
-		Node<T>* temp = tail;
+		Node* temp = tail;
     	tail = tail -> prev;
 
 		if(tail != nullptr){
@@ -146,7 +138,7 @@ public:
 	}
 
 	// Operators
-	LinkedList& operator=(LinkedList&& other) noexcept{
+	LinkedList<T>& operator=(LinkedList<T>&& other) noexcept{
 		if(this == &other){
 			return *this;
 		}
@@ -162,14 +154,14 @@ public:
 		return *this;
 	}
 
-	LinkedList& operator=(const LinkedList& rhs){
+	LinkedList<T>& operator=(const LinkedList<T>& rhs){
 		if (this == &rhs){
 			return *this;
 		}
 
 		clear();
 		
-		Node<T>* curr = rhs.head;
+		Node* curr = rhs.head;
         while (curr) {
             addTail(curr->data);
             curr = curr->next;
@@ -184,15 +176,15 @@ public:
 		count = 0;
 	}
 	
-	LinkedList(const LinkedList& list) : head(nullptr), tail(nullptr), count(0) {
-		Node<T>* curr = list.head;
+	LinkedList(const LinkedList<T>& list) : head(nullptr), tail(nullptr), count(0) {
+		Node* curr = list.head;
 		while (curr) {
 			addTail(curr->data);
 			curr = curr->next;
 		}
 	}
 
-	LinkedList(LinkedList&& other) noexcept : head(other.head), tail(other.tail), count(other.count) {
+	LinkedList(LinkedList<T>&& other) noexcept : head(other.head), tail(other.tail), count(other.count) {
 		other.head = nullptr;
 		other.tail = nullptr;
 		other.count = 0;
@@ -204,7 +196,7 @@ public:
 
 private:
 	// Stores pointers to first and last nodes and count
-	Node<T>* head;
-	Node<T>* tail;
+	Node* head;
+	Node* tail;
 	unsigned int count;
 };
